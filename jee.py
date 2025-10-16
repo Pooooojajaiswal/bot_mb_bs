@@ -236,8 +236,8 @@ def initialize_system():
             """
             print("[STUB] get_weakest_topics called. Returning placeholder topics.")
             # Placeholder logic:
-            if subject == "Biology":
-                return ["Cell Structure", "Genetics"]
+            if subject == "Mathematics":
+                return ["Calculus", "Diffrential integrals"]
             return ["Motion", "Forces"]
 
 
@@ -371,7 +371,7 @@ def initialize_system():
             description=(
                 "Use this tool to create and start an adaptive quiz for the user. "
                 "This should only be called AFTER the user agrees to take a quiz. "
-                "You must pass the current 'subject' (e.g., 'Biology') and the specific 'topic' just discussed (e.g., 'Enzyme Action')."
+                "You must pass the current 'subject' (e.g., 'Mathematics') and the specific 'topic' just discussed."
             )
         )
 
@@ -392,7 +392,7 @@ def initialize_system():
 
 # --- Streamlit UI ---
 st.title("JEE AI Prep Coach")
-st.write("Ask me to explain any concept from Physics, Chemistry, or Biology!")
+st.write("Ask me to explain any concept from Physics, Chemistry, or Mathematics!")
 
 # Initialize system
 query_engine = initialize_system()
@@ -402,7 +402,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = [
         {
             "role": "assistant",
-            "content": "Namaste! I'm your dedicated JEE coach. We can cover any concept from Physics, Chemistry, or Biology, or practice PYQs. What topic is on your mind today?"
+            "content": "Namaste! I'm your dedicated JEE coach. We can cover any concept from Physics, Chemistry, or Mathematics, or practice PYQs. What topic is on your mind today?"
         }
     ]
 if "image_search_history" not in st.session_state:
@@ -525,7 +525,7 @@ elif st.session_state.conversation_mode == "chat":
     if not st.session_state.subject_selected:
         selected_subject = st.selectbox(
             "Please select your subject to begin:",
-            ["--- Select Subject ---", "Physics", "Chemistry", "Biology"]
+            ["--- Select Subject ---", "Physics", "Chemistry", "Mathematics"]
         )
         
         if st.button("Start Session") and selected_subject != "--- Select Subject ---":

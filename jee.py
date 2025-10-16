@@ -83,6 +83,8 @@ must be computed digit-by-digit.)
 2. Visual Aid — include at least one diagram/graph (free-body, circuit, conic, 
 energy diagram). Provide caption, alt-text, and how it helps solve JEE problems. 
 Use image_search("JEE [topic] diagram"). 
+    * Based on the context from Part 1, use the `image_search` tool to find ONE highly relevant image.
+    * Render the image immediately using Markdown: `![](URL)`.
 3. Core Definition & Key Details — textbook lowdown (definitions, key formulas, 
 conditions & limits, typical pitfalls). 
 4. Solved Example — one exam-style problem (Main or Advanced per target). 

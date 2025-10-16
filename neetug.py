@@ -135,7 +135,7 @@ def initialize_system():
     try:
         # --- UPDATE THE LLM INITIALIZATION ---
         Settings.llm = OpenAI(
-            model="gpt-4.1-mini", 
+            model="gpt-4o-mini", 
             api_key=api_key, 
         )
         Settings.embed_model = OpenAIEmbedding(model="text-embedding-3-large", api_key=api_key)

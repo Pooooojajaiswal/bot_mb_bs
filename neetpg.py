@@ -518,8 +518,6 @@ if st.session_state.conversation_mode == "quiz":
     else:
         # Quiz is over (This logic was correct)
         st.success("Quiz complete!")
-        # ... (rest of your quiz summary logic is fine)
-        # ...
         st.session_state.conversation_mode = "chat"
         st.session_state.current_test = []
         st.session_state.quiz_responses = []
@@ -528,64 +526,47 @@ if st.session_state.conversation_mode == "quiz":
         st.session_state.messages.append({"role": "assistant", "content": "Great job on the quiz! What concept would you like to cover next?"})
         if st.button("Back to Lesson"): # Use if to avoid error on auto-rerun
             st.rerun()
-
-
 # ===================================================================
-# STATE 2: CHAT MODE (Your original logic)
+# STATE 2: CHAT MODE (Modified Logic)
 # This only runs if we are NOT in quiz mode
 # ===================================================================
 elif st.session_state.conversation_mode == "chat":
 
-    # --- Subject Selection (This logic stays the same) ---
-    if not st.session_state.subject_selected:
-        selected_subject = st.selectbox(
-            "Please select your subject to begin:",
-            ["--- Select Subject ---", "Physics", "Chemistry", "Biology"]
-        )
+    # --- Main Chat Input (Now always visible) ---
+    user_input = st.chat_input("Ask your question here:")
+
+    if user_input:
+        # Add user message to history
+        st.session_state.messages.append({"role": "user", "content": user_input})
+
+        # Display user message immediately
+        with st.chat_message("user"):
+            st.markdown(user_input)
+
+        # The query is now sent directly without the subject context
+        contextual_query = user_input 
         
-        if st.button("Start Session") and selected_subject != "--- Select Subject ---":
-            st.session_state.subject_selected = selected_subject
-            welcome_text = f"Great! We're focusing on **{selected_subject}**. What concept can I help you with first?"
-            st.session_state.messages.append({"role": "assistant", "content": welcome_text})
-            st.rerun()
+        logger.info(f"Sending query to agent: {contextual_query}")
 
-    # --- Main Chat Input (Only show if subject IS selected) ---
-    else:
-        st.caption(f"Current Session: {st.session_state.subject_selected} (Chat Mode)")
-        
-        user_input = st.chat_input(f"Ask your {st.session_state.subject_selected} question:")
+        # Generate and display response from the agent
+        try:
+            with st.spinner("Thinking..."):
+                response = query_engine.chat(contextual_query)
+                response_content = str(response)
 
-        if user_input:
-            # Add user message to history
-            st.session_state.messages.append({"role": "user", "content": user_input})
+            # Add assistant's response to history
+            st.session_state.messages.append({"role": "assistant", "content": response_content})
 
-            # Display user message immediately
-            with st.chat_message("user"):
-                st.markdown(user_input)
-
-            contextual_query = f"[Subject Context: {st.session_state.subject_selected}] User query: {user_input}"
-
+            # Display assistant's response
+            with st.chat_message("assistant"):
+                st.markdown(response_content)
+            
+            # Rerun to clear the input box and show the full response
+            st.rerun() 
                 
-            logger.info(f"Sending contextual query to agent: {contextual_query}")
+        except Exception as e:
+            error_message = f"Sorry, an error occurred: {str(e)}"
+            st.error(error_message)
+            logger.error(f"Query processing error: {str(e)}", exc_info=True)
+            st.session_state.messages.append({"role": "assistant", "content": error_message})
 
-            # Generate and display response from the agent
-            try:
-                with st.spinner(f"Thinking about {st.session_state.subject_selected}..."):
-                    response = query_engine.chat(contextual_query)
-                    response_content = str(response)
-
-                # Add assistant's response to history
-                st.session_state.messages.append({"role": "assistant", "content": response_content})
-
-                # Display assistant's response
-                with st.chat_message("assistant"):
-                    st.markdown(response_content)
-                
-                # Rerun to clear the input box and show the full response
-                st.rerun() 
-                    
-            except Exception as e:
-                error_message = f"Sorry, an error occurred: {str(e)}"
-                st.error(error_message)
-                logger.error(f"Query processing error: {str(e)}", exc_info=True)
-                st.session_state.messages.append({"role": "assistant", "content": error_message})

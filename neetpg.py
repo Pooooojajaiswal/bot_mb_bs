@@ -62,6 +62,7 @@ except Exception as e:
 # QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
 # QDRANT_COLLECTION_NAME = "previous_year_questions"
 QDRANT_PATH = os.getenv("QDRANT_PATH", "qdrant_data")
+QDRANT_COLLECTION_NAME = "previous_year_questions"
 
 # ---DEFINE THE SYSTEM PROMPT ---
 SYSTEM_PROMPT = """

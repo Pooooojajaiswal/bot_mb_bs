@@ -1,3 +1,12 @@
+import nltk
+
+# This is the fix: Manually download the NLTK 'punkt' package
+# We use a try/except block to avoid re-downloading on every run.
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
+
 import os
 import streamlit as st
 from dotenv import load_dotenv
@@ -109,7 +118,7 @@ def initialize_system():
     try:
         # --- UPDATE THE LLM INITIALIZATION ---
         Settings.llm = OpenAI(
-            model="gpt-4.1-mini", 
+            model="gpt-4o-mini", 
             api_key=api_key, 
         )
         Settings.embed_model = OpenAIEmbedding(model="text-embedding-3-large", api_key=api_key)

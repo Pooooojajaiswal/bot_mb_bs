@@ -59,8 +59,8 @@ except Exception as e:
     st.stop()
 
 # # --- Llama-Index and Qdrant Configuration ---
-# QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
-# QDRANT_COLLECTION_NAME = "previous_year_questions"
+QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
+QDRANT_COLLECTION_NAME = "previous_year_questions"
 
 
 # ---DEFINE THE SYSTEM PROMPT ---

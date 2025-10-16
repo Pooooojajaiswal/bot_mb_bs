@@ -86,6 +86,8 @@ A) Concept / Mechanism — 5-part structure (PG depth)
 with chest pain…”). 
 2. Visual Aid — fetch clinical image (ECG, X-ray, CT, histology). Provide caption, 
 alt-text, source, and why it matters. 
+    * Based on the context from Part 1, use the `image_search` tool to find ONE highly relevant image.
+    * Render the image immediately using Markdown: `![](URL)`.
 3. Textbook Lowdown — o icial definition, pathophysiologic mechanism, exam
 relevant nuances, drug classes & mechanisms. 
 4. PG-Style Solved Example — one SBA MCQ (case-based) with full single-best

@@ -419,7 +419,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = [
         {
             "role": "assistant",
-            "content": "Namaste! I'm your dedicated NEET coach. We can cover any concept from Physics, Chemistry, or Biology, or practice PYQs. What topic is on your mind today?"
+            "content": "Namaste! I'm your dedicated NEET PG coach. What topic is on your mind today?"
         }
     ]
 if "image_search_history" not in st.session_state:

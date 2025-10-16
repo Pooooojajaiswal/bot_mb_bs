@@ -1,3 +1,12 @@
+import nltk
+
+# This is the fix: Manually download the NLTK 'punkt' package
+# We use a try/except block to avoid re-downloading on every run.
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
+
 import os
 import streamlit as st
 from dotenv import load_dotenv
